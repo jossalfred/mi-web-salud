@@ -6,31 +6,524 @@
     <title>SaludIntegral | Consejos de Bienestar y Vida Sana</title>
     <meta name="description" content="Aprende sobre nutrición, ejercicio y hábitos saludables para mejorar tu calidad de vida.">
     
-    <!-- Preconnect para mejorar rendimiento -->
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://identity.netlify.com">
     
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Open Graph para redes sociales -->
     <meta property="og:title" content="SaludIntegral | Consejos de Bienestar">
     <meta property="og:description" content="Información sobre nutrición, ejercicio y hábitos saludables">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="img/og-image.jpg">
     
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0000000000000000" crossorigin="anonymous"></script>
-    
-    <!-- Netlify Identity -->
     <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2ecc71;
+            --secondary: #27ae60;
+            --accent: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header mejorado con animación */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        h1 span {
+            color: #f39c12;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f39c12;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Botón hamburguesa para móvil */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero mejorado */
+        .hero {
+            background: linear-gradient(135deg, rgba(46,204,113,0.9), rgba(39,174,96,0.9)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%232ecc71" width="1200" height="400"/></svg>');
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Búsqueda */
+        .search-box {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: var(--shadow-lg);
+            transform: scale(1.02);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        /* Filtros */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Stats section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        /* Grid de artículos mejorado */
+        .grid-articulos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: var(--light);
+            color: var(--dark);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--accent), #2980b9);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .newsletter h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .newsletter button {
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--accent);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .newsletter button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Ad space */
+        .ad-space {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 2px dashed #ccc;
+            color: #999;
+            font-weight: 600;
+        }
+
+        /* Footer mejorado */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
+        }
+
+        .scroll-top.show {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
 
 <header role="banner">
     <div class="container">
         <h1>Salud<span>Integral</span></h1>
+        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
         <nav role="navigation" aria-label="Navegación principal">
-            <ul>
+            <ul id="mainMenu">
                 <li><a href="index.html" aria-current="page">Inicio</a></li>
                 <li><a href="#articulos">Artículos</a></li>
                 <li><a href="privacidad.html">Privacidad</a></li>
@@ -46,56 +539,115 @@
         <p>Información basada en hábitos saludables para una vida plena.</p>
     </section>
 
-    <!-- Espacio para anuncios con mejor semántica -->
+    <!-- Barra de búsqueda -->
+    <div class="search-box">
+        <input type="search" placeholder="Buscar artículos sobre salud..." aria-label="Buscar artículos">
+        <button type="button">Buscar</button>
+    </div>
+
+    <!-- Filtros de categoría -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="nutricion">Nutrición</button>
+        <button class="filter-btn" data-filter="ejercicio">Ejercicio</button>
+        <button class="filter-btn" data-filter="mental">Salud Mental</button>
+    </div>
+
+    <!-- Estadísticas -->
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <p>Artículos Publicados</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">50K+</div>
+            <p>Lectores Mensuales</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">98%</div>
+            <p>Satisfacción</p>
+        </div>
+    </section>
+
     <aside class="ad-space" aria-label="Publicidad">
-        <div class="ad-placeholder">Espacio para Anuncio Horizontal</div>
+        <div>Espacio para Anuncio Horizontal</div>
     </aside>
 
     <section id="articulos" class="grid-articulos" aria-labelledby="titulo-articulos">
         <h2 id="titulo-articulos" class="sr-only">Artículos destacados</h2>
         
-        <article class="card">
-            <img src="img/dieta.jpg" alt="Plato con alimentos de la dieta mediterránea" loading="lazy" width="400" height="300">
-            <h3>5 Beneficios de la Dieta Mediterránea</h3>
-            <p>Descubre por qué este estilo de alimentación es considerado el mejor para el corazón...</p>
-            <a href="dieta.html" class="btn" aria-label="Leer más sobre la dieta mediterránea">Leer más</a>
+        <article class="card" data-category="nutricion">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=300&fit=crop" alt="Plato con alimentos saludables de la dieta mediterránea" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Nutrición</span>
+                    <span class="tag">Dieta</span>
+                </div>
+                <h3>5 Beneficios de la Dieta Mediterránea</h3>
+                <p>Descubre por qué este estilo de alimentación es considerado el mejor para el corazón y la longevidad...</p>
+                <a href="dieta.html" class="btn" aria-label="Leer más sobre la dieta mediterránea">Leer más</a>
+            </div>
         </article>
 
-        <article class="card">
-            <img src="img/yoga.jpg" alt="Persona practicando yoga en postura de meditación" loading="lazy" width="400" height="300">
-            <h3>Rutina de Yoga para Principiantes</h3>
-            <p>Mejora tu flexibilidad y reduce el estrés con estos 10 minutos diarios...</p>
-            <a href="yoga.html" class="btn" aria-label="Leer más sobre yoga para principiantes">Leer más</a>
+        <article class="card" data-category="ejercicio">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop" alt="Persona practicando yoga en postura de meditación" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Ejercicio</span>
+                    <span class="tag">Yoga</span>
+                </div>
+                <h3>Rutina de Yoga para Principiantes</h3>
+                <p>Mejora tu flexibilidad y reduce el estrés con estos 10 minutos diarios de práctica mindful...</p>
+                <a href="yoga.html" class="btn" aria-label="Leer más sobre yoga para principiantes">Leer más</a>
+            </div>
         </article>
 
-        <article class="card">
-            <img src="img/sueno.jpg" alt="Persona durmiendo tranquilamente en una cama cómoda" loading="lazy" width="400" height="300">
-            <h3>La importancia de dormir 8 horas</h3>
-            <p>El descanso es el pilar olvidado de la salud. Aquí te explicamos el porqué...</p>
-            <a href="sueno.html" class="btn" aria-label="Leer más sobre la importancia del sueño">Leer más</a>
+        <article class="card" data-category="mental">
+            <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&h=300&fit=crop" alt="Persona durmiendo tranquilamente" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Sueño</span>
+                    <span class="tag">Bienestar</span>
+                </div>
+                <h3>La importancia de dormir 8 horas</h3>
+                <p>El descanso es el pilar olvidado de la salud. Aquí te explicamos el porqué y cómo mejorarlo...</p>
+                <a href="sueno.html" class="btn" aria-label="Leer más sobre la importancia del sueño">Leer más</a>
+            </div>
         </article>
-    </section>
-</main>
 
-<footer role="contentinfo">
-    <div class="container">
-        <p>&copy; 2025 SaludIntegral - Información con fines educativos.</p>
-        <p><small>Consulta siempre a un profesional de la salud.</small></p>
-    </div>
-</footer>
+        <article class="card" data-category="ejercicio">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop" alt="Persona haciendo ejercicio" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Ejercicio</span>
+                    <span class="tag">Cardio</span>
+                </div>
+                <h3>Entrenamiento HIIT en Casa</h3>
+                <p>Quema calorías y mejora tu resistencia con solo 20 minutos de ejercicio de alta intensidad...</p>
+                <a href="hiit.html" class="btn">Leer más</a>
+            </div>
+        </article>
 
-<script>
-  // Netlify Identity Widget con mejor manejo
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          window.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
+        <article class="card" data-category="nutricion">
+            <img src="https://images.unsplash.com/photo-1610415946035-bad6fc9f5b8e?w=400&h=300&fit=crop" alt="Batidos saludables" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Nutrición</span>
+                    <span class="tag">Recetas</span>
+                </div>
+                <h3>Batidos Verdes para Energía</h3>
+                <p>5 recetas deliciosas y nutritivas para comenzar tu día con vitalidad y nutrientes esenciales...</p>
+                <a href="batidos.html" class="btn">Leer más</a>
+            </div>
+        </article>
 
-</body>
-</html>
+        <article class="card" data-category="mental">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=300&fit=crop" alt="Meditación en la naturaleza" loading="lazy">
+            <div class="card-content">
+                <div class="tags">
+                    <span class="tag">Mindfulness</span>
+                    <span class="tag">Meditación</span>
+                </div>
+                <h3>Técnicas de Meditación Diaria</h3>
+                <p>Aprende a meditar en 5 minutos y reduce el estrés, la ansiedad y mejora tu concentración...</p>
+                <a href="meditacion.html" clas
